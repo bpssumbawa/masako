@@ -1,0 +1,1537 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MASAKO - SAKIP BPS Sumbawa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f5f7fa;
+            color: #2c3e50;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            padding: 1.5rem 3rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #2c5282, #4299e1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo-text h1 {
+            font-size: 1.8rem;
+            color: #2c5282;
+            font-weight: 700;
+        }
+
+        .logo-text p {
+            font-size: 0.75rem;
+            color: #718096;
+            margin-top: -3px;
+        }
+
+        .year-badge {
+            background: linear-gradient(135deg, #f6ad55, #ed8936);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* Container */
+        .container {
+            display: flex;
+            min-height: calc(100vh - 90px);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: white;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 2rem 1.5rem 1rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .sidebar-header h2 {
+            font-size: 1.3rem;
+            color: #2c5282;
+            margin-bottom: 0.3rem;
+        }
+
+        .sidebar-header p {
+            font-size: 0.8rem;
+            color: #718096;
+        }
+
+        .menu-list {
+            padding: 1rem 0;
+        }
+
+        .menu-item {
+            margin-bottom: 0.3rem;
+        }
+
+        .menu-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.9rem 1.5rem;
+            color: #4a5568;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .menu-link:hover {
+            background: #edf2f7;
+        }
+
+        .menu-link.active {
+            background: #4299e1;
+            color: white;
+        }
+
+        .menu-link.has-dropdown.active {
+            background: #3182ce;
+        }
+
+        .menu-icon {
+            width: 38px;
+            height: 38px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .menu-link.active .menu-icon {
+            background: white;
+        }
+
+        .menu-text h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 0.1rem;
+        }
+
+        .menu-text p {
+            font-size: 0.7rem;
+            opacity: 0.8;
+        }
+
+        .menu-arrow {
+            margin-left: auto;
+            font-size: 0.8rem;
+            transition: transform 0.3s;
+        }
+
+        .menu-item.open .menu-arrow {
+            transform: rotate(90deg);
+        }
+
+        /* Submenu Level 1 (Tahun) */
+        .submenu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: #f7fafc;
+        }
+
+        .menu-item.open .submenu {
+            max-height: 1200px;
+        }
+
+        .submenu-item {
+            padding: 0.7rem 1.5rem 0.7rem 4.5rem;
+            color: #4a5568;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .submenu-item:hover {
+            background: #e2e8f0;
+            padding-left: 5rem;
+        }
+
+        .submenu-item.active {
+            background: #bee3f8;
+            color: #2c5282;
+            font-weight: 600;
+            border-left: 3px solid #4299e1;
+        }
+
+        .submenu-item.has-sub {
+            cursor: pointer;
+        }
+
+        .submenu-arrow {
+            font-size: 0.7rem;
+            transition: transform 0.3s;
+        }
+
+        .submenu-item.open .submenu-arrow {
+            transform: rotate(90deg);
+        }
+
+        /* Submenu Level 2 (Triwulan) */
+        .sub-submenu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: #edf2f7;
+        }
+
+        .submenu-item.open .sub-submenu {
+            max-height: 600px;
+        }
+
+        .sub-submenu-item {
+            padding: 0.6rem 1.5rem 0.6rem 1rem;
+            color: #4a5568;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+
+        .sub-submenu-item:hover {
+            background: #cbd5e0;
+        }
+
+        .sub-submenu-item.active {
+            background: #90cdf4;
+            color: #2c5282;
+            font-weight: 600;
+            border-left: 3px solid #3182ce;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 2.5rem 3rem;
+            overflow-y: auto;
+        }
+
+        /* Page Header */
+        .page-header {
+            margin-bottom: 2rem;
+        }
+
+        .page-banner {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .page-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            color: #2c5282;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .page-title .highlight {
+            background: linear-gradient(135deg, #ed8936, #f6ad55);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .page-description {
+            font-size: 1rem;
+            color: #718096;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        /* Section Title */
+        .section-title {
+            font-size: 1.4rem;
+            color: #2c5282;
+            margin: 2.5rem 0 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 28px;
+            background: linear-gradient(180deg, #ed8936, #f6ad55);
+            border-radius: 2px;
+        }
+
+        /* Document Grid */
+        .doc-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .doc-card {
+            background: white;
+            border-radius: 16px;
+            padding: 1.8rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            display: flex;
+            align-items: flex-start;
+            gap: 1.2rem;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: inherit;
+            border: 2px solid transparent;
+        }
+
+        .doc-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+            border-color: #4299e1;
+        }
+
+        .doc-icon-wrapper {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #e2e8f0, #cbd5e0);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            flex-shrink: 0;
+            transition: all 0.3s;
+        }
+
+        .doc-card:hover .doc-icon-wrapper {
+            background: linear-gradient(135deg, #4299e1, #3182ce);
+            transform: scale(1.1);
+        }
+
+        .doc-content h3 {
+            font-size: 1.05rem;
+            color: #2c5282;
+            margin-bottom: 0.4rem;
+            font-weight: 600;
+        }
+
+        .doc-content p {
+            font-size: 0.85rem;
+            color: #718096;
+            line-height: 1.5;
+        }
+
+        /* Home Page */
+        .hero {
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        .hero-image {
+            width: 100%;
+            max-width: 800px;
+            height: 350px;
+            margin: 0 auto 2.5rem;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            color: #2c5282;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .hero .highlight {
+            background: linear-gradient(135deg, #ed8936, #f6ad55);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: #718096;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #4299e1, #3182ce);
+            color: white;
+            padding: 2.5rem 2rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(66, 153, 225, 0.3);
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .stat-number {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, #e6fffa, #f0fff4);
+            padding: 2rem;
+            border-radius: 16px;
+            margin-top: 2rem;
+            border-left: 4px solid #48bb78;
+        }
+
+        .info-box h3 {
+            color: #2c5282;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .info-box p {
+            color: #4a5568;
+            line-height: 1.8;
+        }
+
+        /* Content Pages */
+        .content-page {
+            display: none;
+        }
+
+        .content-page.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .doc-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+            }
+
+            .doc-grid,
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .main-content {
+                padding: 1.5rem;
+            }
+
+            header {
+                padding: 1rem 1.5rem;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* Scrollbar */
+        .sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: #cbd5e0;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-section">
+            <div class="logo">M</div>
+            <div class="logo-text">
+                <h1>MASAKO</h1>
+                <p>Manajemen SAKIP Online</p>
+            </div>
+        </div>
+        <div class="year-badge">Tahun 2026</div>
+    </header>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Menu Dokumen</h2>
+                <p>BPS Kabupaten Sumbawa</p>
+            </div>
+
+            <div class="menu-list">
+                <!-- Beranda -->
+                <div class="menu-item">
+                    <div class="menu-link active" onclick="showHome()">
+                        <div class="menu-icon">🏠</div>
+                        <div class="menu-text">
+                            <h3>Beranda</h3>
+                            <p>Halaman Utama</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FRA & KKPK dengan nested dropdown -->
+                <div class="menu-item">
+                    <div class="menu-link has-dropdown" onclick="toggleSubmenu(this)">
+                        <div class="menu-icon">📊</div>
+                        <div class="menu-text">
+                            <h3>FRA & KKPK</h3>
+                            <p>Formulir Rencana Aksi</p>
+                        </div>
+                        <span class="menu-arrow">▶</span>
+                    </div>
+                    <div class="submenu">
+                        <!-- Tahun 2025 -->
+                        <div class="submenu-item has-sub" onclick="toggleSubSubmenu(this, event)">
+                            <span>📅 Tahun 2025</span>
+                            <span class="submenu-arrow">▶</span>
+                            <div class="sub-submenu">
+                                <div class="sub-submenu-item" onclick="showPage('fra-2025-tw1')">Triwulan I</div>
+                                <div class="sub-submenu-item" onclick="showPage('fra-2025-tw2')">Triwulan II</div>
+                                <div class="sub-submenu-item" onclick="showPage('fra-2025-tw3')">Triwulan III</div>
+                                <div class="sub-submenu-item" onclick="showPage('fra-2025-tw4')">Triwulan IV</div>
+                            </div>
+                        </div>
+
+                        <!-- Tahun 2026 -->
+                        <div class="submenu-item has-sub" onclick="toggleSubSubmenu(this, event)">
+                            <span>📅 Tahun 2026</span>
+                            <span class="submenu-arrow">▶</span>
+                            <div class="sub-submenu">
+                                <div class="sub-submenu-item" onclick="showPage('fra-2026-tw1')">Triwulan I</div>
+                                <div class="sub-submenu-item" onclick="showPage('fra-2026-tw2')">Triwulan II</div>
+                                <div class="sub-submenu-item" onclick="showPage('fra-2026-tw3')">Triwulan III</div>
+                                <div class="sub-submenu-item" onclick="showPage('fra-2026-tw4')">Triwulan IV</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ESR -->
+                <div class="menu-item">
+                    <a href="https://esr.menpan.go.id" target="_blank" class="menu-link">
+                        <div class="menu-icon">🔍</div>
+                        <div class="menu-text">
+                            <h3>ESR</h3>
+                            <p>Evaluasi Sistem Review</p>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Perjanjian Kinerja -->
+                <div class="menu-item">
+                    <div class="menu-link has-dropdown" onclick="toggleSubmenu(this)">
+                        <div class="menu-icon">📝</div>
+                        <div class="menu-text">
+                            <h3>Perjanjian Kinerja</h3>
+                            <p>Dokumen Komitmen</p>
+                        </div>
+                        <span class="menu-arrow">▶</span>
+                    </div>
+                    <div class="submenu">
+                        <div class="submenu-item" onclick="showPage('pk-2025')">Tahun 2025</div>
+                        <div class="submenu-item" onclick="showPage('pk-2026')">Tahun 2026</div>
+                    </div>
+                </div>
+
+                <!-- Renstra -->
+                <div class="menu-item">
+                    <div class="menu-link has-dropdown" onclick="toggleSubmenu(this)">
+                        <div class="menu-icon">🌱</div>
+                        <div class="menu-text">
+                            <h3>Renstra</h3>
+                            <p>Rencana Strategis</p>
+                        </div>
+                        <span class="menu-arrow">▶</span>
+                    </div>
+                    <div class="submenu">
+                        <div class="submenu-item" onclick="showPage('renstra-draft')">Draft Ranawal Renstra</div>
+                        <div class="submenu-item" onclick="showPage('renstra-reviu')">Reviu Renstra 2026</div>
+                    </div>
+                </div>
+
+                <!-- LAKIN -->
+                <div class="menu-item">
+                    <div class="menu-link has-dropdown" onclick="toggleSubmenu(this)">
+                        <div class="menu-icon">⚒️</div>
+                        <div class="menu-text">
+                            <h3>LAKIN</h3>
+                            <p>Laporan Akuntabilitas</p>
+                        </div>
+                        <span class="menu-arrow">▶</span>
+                    </div>
+                    <div class="submenu">
+                        <div class="submenu-item" onclick="showPage('lakin-2024')">LAKIN 2024</div>
+                        <div class="submenu-item" onclick="showPage('lakin-2025')">LAKIN 2025</div>
+                    </div>
+                </div>
+
+                <!-- Materi & Panduan -->
+                <div class="menu-item">
+                    <a href="https://linktr.ee/LAKIN26" target="_blank" class="menu-link">
+                        <div class="menu-icon">✨</div>
+                        <div class="menu-text">
+                            <h3>Materi & Panduan</h3>
+                            <p>Referensi SAKIP</p>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- SINERGI -->
+                <div class="menu-item">
+                    <a href="https://sinergi.web.bps.go.id" target="_blank" class="menu-link">
+                        <div class="menu-icon">🤝</div>
+                        <div class="menu-text">
+                            <h3>SINERGI</h3>
+                            <p>Kolaborasi Unit</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- HOME PAGE -->
+            <div id="page-home" class="content-page active">
+                <div class="hero">
+                    <div class="hero-image">
+                        <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80" alt="SAKIP BPS">
+                    </div>
+                    <h1><span class="highlight">MASAKO</span><br>Manajemen SAKIP Online</h1>
+                    <p>
+                        Sistem Manajemen SAKIP Terintegrasi untuk BPS Kabupaten Sumbawa - 
+                        Mewujudkan Transparansi dan Akuntabilitas Kinerja Melalui Platform Digital
+                    </p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">📈</div>
+                        <div class="stat-number">2</div>
+                        <div class="stat-label">Tahun Data</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🎯</div>
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">Akuntabilitas</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">⭐</div>
+                        <div class="stat-number">A</div>
+                        <div class="stat-label">Target Predikat</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📁</div>
+                        <div class="stat-number">9</div>
+                        <div class="stat-label">Kategori Dokumen</div>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <h3>📌 Tentang MASAKO</h3>
+                    <p>
+                        <strong>MASAKO (Manajemen SAKIP Online)</strong> 
+                        adalah platform terintegrasi yang dirancang untuk memberikan akses mudah dan transparan 
+                        terhadap seluruh dokumen Sistem Akuntabilitas Kinerja Instansi Pemerintah (SAKIP) 
+                        BPS Kabupaten Sumbawa. Kelola dan pantau dokumen SAKIP Anda dengan lebih efisien dan terorganisir.
+                    </p>
+                </div>
+
+                <div class="info-box" style="margin-top: 2rem;">
+                    <h3>🚀 Cara Menggunakan MASAKO</h3>
+                    <p>
+                        <strong>1.</strong> Pilih menu dokumen dari sidebar<br>
+                        <strong>2.</strong> Klik menu untuk membuka dropdown tahun<br>
+                        <strong>3.</strong> Pilih tahun, lalu pilih triwulan (untuk FRA & KKPK)<br>
+                        <strong>4.</strong> Detail dokumen muncul di area tengah<br>
+                        <strong>5.</strong> Klik card dokumen untuk membuka folder Google Drive
+                    </p>
+                </div>
+            </div>
+
+            <!-- FRA 2025 TW1 -->
+            <div id="page-fra-2025-tw1" class="content-page">
+                <div class="page-header">
+                    <div class="page-banner">
+                        <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=1200&q=80" alt="FRA">
+                    </div>
+                    <h1 class="page-title">FRA & <span class="highlight">KKPK 2025</span></h1>
+                    <p class="page-description">Formulir Rencana Aksi dan Kartu Kendali Pencapaian Kinerja - Dokumentasi lengkap monitoring kinerja triwulanan tahun 2025</p>
+                </div>
+
+                <h2 class="section-title">📅 Triwulan I 2025 (Januari - Maret)</h2>
+
+                <div class="doc-grid">
+                    <a href="https://drive.google.com/drive/folders/12Dlu0EPSKhNgsNrpqbNKPecV9fXkVStP?usp=drive_link" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">📄</div>
+                        <div class="doc-content">
+                            <h3>Dokumentasi Penyusunan Renstra</h3>
+                            <p>Proses penyusunan Rencana Strategis</p>
+                        </div>
+                    </a>
+
+                    <a href="https://drive.google.com/drive/folders/1NkYOm61aMEvH9o4BIdlStxVd4SiqbNex?usp=drive_link" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">📝</div>
+                        <div class="doc-content">
+                            <h3>Dokumentasi Penetapan PK 2025</h3>
+                            <p>Penetapan Perjanjian Kinerja tahun 2025</p>
+                        </div>
+                    </a>
+
+                    <a href="https://drive.google.com/drive/folders/1dKr_hamw-Mt6QvVBsEyYUyuM5oGmnKd2?usp=drive_link" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">💼</div>
+                        <div class="doc-content">
+                            <h3>Dokumentasi Rapat Kinerja TW I</h3>
+                            <p>Rapat evaluasi kinerja Triwulan I 2025</p>
+                        </div>
+                    </a>
+
+                    <a href="https://drive.google.com/drive/folders/1ziaiByl9UXYwmxGWUl4ZxJzDynoujmP2?usp=drive_link" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">📋</div>
+                        <div class="doc-content">
+                            <h3>SK Tim SAKIP 2025</h3>
+                            <p>Surat Keputusan Tim SAKIP tahun 2025</p>
+                        </div>
+                    </a>
+
+                    <a href="https://drive.google.com/drive/folders/154bzilJQJ1sTU1_IufidSzjbcC2L2nlh?usp=drive_link" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">📁</div>
+                        <div class="doc-content">
+                            <h3>Dokumen Sumber FRA TW I</h3>
+                            <p>Referensi dan dokumen pendukung</p>
+                        </div>
+                    </a>
+
+                    <a href="https://drive.google.com/drive/folders/1fauznQVT7az8Q1giOQTu4DlNBP2mSiSO?usp=drive_link" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">🔄</div>
+                        <div class="doc-content">
+                            <h3>Tindak Lanjut FRA TW IV 2024</h3>
+                            <p>Follow-up hasil Triwulan IV 2024</p>
+                        </div>
+                    </a>
+
+                    <a href="https://drive.google.com/drive/folders/1NEdEs-NW5r21bR3DaiH7MZpX-RpWB_kR?usp=drive_link" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">📊</div>
+                        <div class="doc-content">
+                            <h3>Tindak Lanjut Evaluasi AKIP 2024</h3>
+                            <p>Follow-up evaluasi AKIP tahun 2024</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- FRA 2025 TW2 -->
+            <div id="page-fra-2025-tw2" class="content-page">
+                <div class="page-header">
+                    <div class="page-banner">
+                        <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=1200&q=80" alt="FRA">
+                    </div>
+                    <h1 class="page-title">FRA & <span class="highlight">KKPK 2025</span></h1>
+                    <p class="page-description">Formulir Rencana Aksi dan Kartu Kendali Pencapaian Kinerja - Dokumentasi lengkap monitoring kinerja triwulanan tahun 2025</p>
+                </div>
+
+                <h2 class="section-title">📅 Triwulan II 2025 (April - Juni)</h2>
+
+                <div class="doc-grid">
+                    <a href="https://drive.google.com/drive/folders/1u3DCk8xbvp-qSNR6sAHQ2FvQALDmjEtU?usp=drive_link" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">📊</div>
+                        <div class="doc-content">
+                            <h3>FRA TW II</h3>
+                            <p>Formulir Rencana Aksi Triwulan II</p>
+                        </div>
+                    </a>
+
+                    <a href="https://drive.google.com/drive/folders/1QYSiT6LfqLs4qbaOkopVJWP32L6DuFnb?usp=drive_link" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">📁</div>
+                        <div class="doc-content">
+                            <h3>Dokumen Sumber FRA TW II</h3>
+                            <p>Referensi dan dokumen pendukung</p>
+                        </div>
+                    </a>
+
+                    <a href="https://drive.google.com/drive/folders/1nl9TWuCz8zupel1599oPMQQzYK90toQ-?usp=drive_link" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">🔄</div>
+                        <div class="doc-content">
+                            <h3>Tindak Lanjut FRA TW I</h3>
+                            <p>Follow-up hasil Triwulan I 2025</p>
+                        </div>
+                    </a>
+
+                    <a href="https://drive.google.com/drive/folders/1wsQS-3YM8OfwXG3l1nNxwOw68yJukkGW?usp=drive_link" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">📋</div>
+                        <div class="doc-content">
+                            <h3>Bahan</h3>
+                            <p>Bahan pendukung dan lampiran</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- FRA 2025 TW3 -->
+            <div id="page-fra-2025-tw3" class="content-page">
+                <div class="page-header">
+                    <div class="page-banner">
+                        <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=1200&q=80" alt="FRA">
+                    </div>
+                    <h1 class="page-title">FRA & <span class="highlight">KKPK 2025</span></h1>
+                    <p class="page-description">Formulir Rencana Aksi dan Kartu Kendali Pencapaian Kinerja - Dokumentasi lengkap monitoring kinerja triwulanan tahun 2025</p>
+                </div>
+
+                <h2 class="section-title">📅 Triwulan III 2025 (Juli - September)</h2>
+
+                <div class="doc-grid">
+                    <a href="https://drive.google.com/drive/folders/1Vb-OA3CIJnVj4-9isnC-0UqjHQSjkALV?usp=drive_link" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">📊</div>
+                        <div class="doc-content">
+                            <h3>FRA TW III</h3>
+                            <p>Formulir Rencana Aksi Triwulan III</p>
+                        </div>
+                    </a>
+
+                    <a href="https://drive.google.com/drive/folders/1x-kZDaJH93UnRoRQLWY-8vWj_9cGaEPY?usp=drive_link" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">📁</div>
+                        <div class="doc-content">
+                            <h3>Dokumen Sumber FRA TW III</h3>
+                            <p>Referensi dan dokumen pendukung</p>
+                        </div>
+                    </a>
+
+                    <a href="https://drive.google.com/drive/folders/10ZCRLp5l2SMY2xND9HwqYeMtxLUHrOBZ?usp=drive_link" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">🔄</div>
+                        <div class="doc-content">
+                            <h3>Tindak Lanjut FRA TW II</h3>
+                            <p>Follow-up hasil Triwulan II 2025</p>
+                        </div>
+                    </a>
+
+                    <a href="https://drive.google.com/drive/folders/1h0nTUC8k1A2NyFpFMt1yR0pG4OnfhIOf?usp=drive_link" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">📋</div>
+                        <div class="doc-content">
+                            <h3>Bahan</h3>
+                            <p>Bahan pendukung dan lampiran</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- FRA 2025 TW4 -->
+            <div id="page-fra-2025-tw4" class="content-page">
+                <div class="page-header">
+                    <div class="page-banner">
+                        <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=1200&q=80" alt="FRA">
+                    </div>
+                    <h1 class="page-title">FRA & <span class="highlight">KKPK 2025</span></h1>
+                    <p class="page-description">Formulir Rencana Aksi dan Kartu Kendali Pencapaian Kinerja - Dokumentasi lengkap monitoring kinerja triwulanan tahun 2025</p>
+                </div>
+
+                <h2 class="section-title">📅 Triwulan IV 2025 (Oktober - Desember)</h2>
+
+                <div class="doc-grid">
+                    <a href="https://drive.google.com/drive/folders/1Je3FmtJUdwT7yxG65Hxv4aIQSs3Q8Mhu?usp=drive_link" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">📊</div>
+                        <div class="doc-content">
+                            <h3>Kertas Kerja Capaian Kinerja</h3>
+                            <p>Analisis detail pencapaian kinerja</p>
+                        </div>
+                    </a>
+
+                    <a href="https://drive.google.com/drive/folders/1TioI-xbZjpFdDsaeRNfI7hEHdVVsX0Ry?usp=drive_link" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">📁</div>
+                        <div class="doc-content">
+                            <h3>Dokumen Sumber FRA TW IV</h3>
+                            <p>Referensi dan dokumen pendukung</p>
+                        </div>
+                    </a>
+
+                    <a href="https://drive.google.com/drive/folders/1x0aT8A1lFXB4k-iQ006N1WBzRqw1Y1KP?usp=drive_link" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">🔄</div>
+                        <div class="doc-content">
+                            <h3>Tindak Lanjut FRA TW III</h3>
+                            <p>Follow-up hasil Triwulan III 2025</p>
+                        </div>
+                    </a>
+
+                    <a href="https://drive.google.com/drive/folders/16zmils9uk2z0rOyq2rEuWCIiGFa1oOZH?usp=drive_link" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">📋</div>
+                        <div class="doc-content">
+                            <h3>Bahan</h3>
+                            <p>Bahan pendukung dan lampiran</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- FRA 2026 TW1 -->
+            <div id="page-fra-2026-tw1" class="content-page">
+                <div class="page-header">
+                    <div class="page-banner">
+                        <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=1200&q=80" alt="FRA">
+                    </div>
+                    <h1 class="page-title">FRA & <span class="highlight">KKPK 2026</span></h1>
+                    <p class="page-description">Formulir Rencana Aksi dan Kartu Kendali Pencapaian Kinerja - Dokumentasi lengkap monitoring kinerja triwulanan tahun 2026</p>
+                </div>
+
+                <h2 class="section-title">📅 Triwulan I 2026 (Januari - Maret)</h2>
+
+                <div class="doc-grid">
+                    <a href="https://drive.google.com/drive/folders/1QqWwTXO2Mrohz86kr-D2YdkMMWSexOzw?usp=sharing" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">📧</div>
+                        <div class="doc-content">
+                            <h3>Undangan</h3>
+                            <p>Surat undangan rapat FRA & KKPK</p>
+                        </div>
+                    </a>
+
+                    <a href="https://drive.google.com/drive/folders/1ngTKh3FjmcJDANJ1wsBW_aedsr4fYNvd?usp=drive_link" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">📁</div>
+                        <div class="doc-content">
+                            <h3>Dokumen Sumber</h3>
+                            <p>Referensi dan dokumen pendukung</p>
+                        </div>
+                    </a>
+
+                    <a href="https://drive.google.com/drive/folders/1Ty0JkpGRYoUrK7dICr09C-PMxzZdhTAd?usp=drive_link" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">🔄</div>
+                        <div class="doc-content">
+                            <h3>Tindak Lanjut TW Sebelumnya</h3>
+                            <p>Follow-up hasil periode sebelumnya</p>
+                        </div>
+                    </a>
+
+                    <a href="https://drive.google.com/drive/folders/13fhneTNhU4kUZQsH_OshKdsHjcSfjxdQ?usp=drive_link" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">📊</div>
+                        <div class="doc-content">
+                            <h3>Kertas Kerja Capaian Kinerja</h3>
+                            <p>Analisis detail pencapaian kinerja</p>
+                        </div>
+                    </a>
+
+                    <a href="https://drive.google.com/drive/folders/15uGcaD2F6nfN_gIeqyaR1ur4lPRBp6jN?usp=drive_link" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">📋</div>
+                        <div class="doc-content">
+                            <h3>Kertas Kerja Notula</h3>
+                            <p>Detail dokumentasi rapat lengkap</p>
+                        </div>
+                    </a>
+
+                    <a href="https://drive.google.com/drive/folders/1XOJ20L1cUE3XkocOCXOwDNp4mJyOkRf_?usp=drive_link" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">📁</div>
+                        <div class="doc-content">
+                            <h3>Dokumen Lainnya</h3>
+                            <p>File pendukung dan lampiran tambahan</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- FRA 2026 TW2 -->
+            <div id="page-fra-2026-tw2" class="content-page">
+                <div class="page-header">
+                    <div class="page-banner">
+                        <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=1200&q=80" alt="FRA">
+                    </div>
+                    <h1 class="page-title">FRA & <span class="highlight">KKPK 2026</span></h1>
+                    <p class="page-description">Formulir Rencana Aksi dan Kartu Kendali Pencapaian Kinerja - Dokumentasi lengkap monitoring kinerja triwulanan tahun 2026</p>
+                </div>
+
+                <h2 class="section-title">📅 Triwulan II 2026 (April - Juni)</h2>
+
+                <div class="doc-grid">
+                    <a href="https://drive.google.com/drive/folders/1sTddKMmq_IuPQHGlp4uhtTIOvfA7QpWP?usp=sharing" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">📧</div>
+                        <div class="doc-content">
+                            <h3>Undangan</h3>
+                            <p>Surat undangan rapat FRA & KKPK</p>
+                        </div>
+                    </a>
+
+                    <a href="https://drive.google.com/drive/folders/1UKHo3sqzQfQcw4vRH2qkZQkoCQCGpJ-U?usp=drive_link" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">📁</div>
+                        <div class="doc-content">
+                            <h3>Dokumen Sumber</h3>
+                            <p>Referensi dan dokumen pendukung</p>
+                        </div>
+                    </a>
+
+                    <a href="https://drive.google.com/drive/folders/1fuREmKUcGCllQDLzf5M2-7SUWl3muyFw?usp=drive_link" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">🔄</div>
+                        <div class="doc-content">
+                            <h3>Tindak Lanjut TW I</h3>
+                            <p>Follow-up hasil Triwulan I</p>
+                        </div>
+                    </a>
+
+                    <a href="https://drive.google.com/drive/folders/1J2rIv7HHxrd45SVdNpP6A9-xvd0v4WHA?usp=drive_link" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">📊</div>
+                        <div class="doc-content">
+                            <h3>Kertas Kerja Capaian Kinerja</h3>
+                            <p>Analisis detail pencapaian kinerja</p>
+                        </div>
+                    </a>
+
+                    <a href="https://drive.google.com/drive/folders/1KQrl6xQdtdywey4vuC5IQaSPTo0AnRS-?usp=drive_link" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">📋</div>
+                        <div class="doc-content">
+                            <h3>Kertas Kerja Notula</h3>
+                            <p>Detail dokumentasi rapat lengkap</p>
+                        </div>
+                    </a>
+
+                    <a href="https://drive.google.com/drive/folders/1sPfirQnMKatuVrB7OyWg1dtGOxTyS8Il?usp=drive_link" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">📁</div>
+                        <div class="doc-content">
+                            <h3>Dokumen Lainnya</h3>
+                            <p>File pendukung dan lampiran tambahan</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- FRA 2026 TW3 -->
+            <div id="page-fra-2026-tw3" class="content-page">
+                <div class="page-header">
+                    <div class="page-banner">
+                        <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=1200&q=80" alt="FRA">
+                    </div>
+                    <h1 class="page-title">FRA & <span class="highlight">KKPK 2026</span></h1>
+                    <p class="page-description">Formulir Rencana Aksi dan Kartu Kendali Pencapaian Kinerja - Dokumentasi lengkap monitoring kinerja triwulanan tahun 2026</p>
+                </div>
+
+                <h2 class="section-title">📅 Triwulan III 2026 (Juli - September)</h2>
+
+                <div class="doc-grid">
+                    <a href="https://drive.google.com/drive/folders/11wxI-atg9G1oJr7R7l3I0LAvlojnxrnO?usp=drive_link" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">📧</div>
+                        <div class="doc-content">
+                            <h3>Undangan</h3>
+                            <p>Surat undangan rapat FRA & KKPK</p>
+                        </div>
+                    </a>
+
+                    <a href="https://drive.google.com/drive/folders/1pxe3Sb8ZuvstbIRF-RsD6qrpnovbQWww?usp=drive_link" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">📁</div>
+                        <div class="doc-content">
+                            <h3>Dokumen Sumber</h3>
+                            <p>Referensi dan dokumen pendukung</p>
+                        </div>
+                    </a>
+
+                    <a href="https://drive.google.com/drive/folders/1EubaeU8XCk06iXLMhZyXfDvyLoRv9htx?usp=drive_link" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">🔄</div>
+                        <div class="doc-content">
+                            <h3>Tindak Lanjut TW II</h3>
+                            <p>Follow-up hasil Triwulan II</p>
+                        </div>
+                    </a>
+
+                    <a href="https://drive.google.com/drive/folders/1ijIdGbFkmcHE1lf2-fLhJ53yR1XF2jFJ?usp=drive_link" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">📊</div>
+                        <div class="doc-content">
+                            <h3>Kertas Kerja Capaian Kinerja</h3>
+                            <p>Analisis detail pencapaian kinerja</p>
+                        </div>
+                    </a>
+
+                    <a href="https://drive.google.com/drive/folders/1J27lLnW7oqjfFk7Tbe9M_Bd0N_FFNLWg?usp=drive_link" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">📋</div>
+                        <div class="doc-content">
+                            <h3>Kertas Kerja Notula</h3>
+                            <p>Detail dokumentasi rapat lengkap</p>
+                        </div>
+                    </a>
+
+                    <a href="https://drive.google.com/drive/folders/1nbXTHjHlCHEq1jNCfJa-36uMjAXJnfTF?usp=drive_link" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">📁</div>
+                        <div class="doc-content">
+                            <h3>Dokumen Lainnya</h3>
+                            <p>File pendukung dan lampiran tambahan</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- FRA 2026 TW4 -->
+            <div id="page-fra-2026-tw4" class="content-page">
+                <div class="page-header">
+                    <div class="page-banner">
+                        <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=1200&q=80" alt="FRA">
+                    </div>
+                    <h1 class="page-title">FRA & <span class="highlight">KKPK 2026</span></h1>
+                    <p class="page-description">Formulir Rencana Aksi dan Kartu Kendali Pencapaian Kinerja - Dokumentasi lengkap monitoring kinerja triwulanan tahun 2026</p>
+                </div>
+
+                <h2 class="section-title">📅 Triwulan IV 2026 (Oktober - Desember)</h2>
+
+                <div class="doc-grid">
+                    <a href="https://drive.google.com/drive/folders/1wixZNgD3fBlWViO3ZTpbtySFwGsWwLJe?usp=drive_link" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">📧</div>
+                        <div class="doc-content">
+                            <h3>Undangan</h3>
+                            <p>Surat undangan rapat FRA & KKPK</p>
+                        </div>
+                    </a>
+
+                    <a href="https://drive.google.com/drive/folders/10lIIxzqbvW4qux3t4YFIeqyQT_67FGZA?usp=drive_link" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">📁</div>
+                        <div class="doc-content">
+                            <h3>Dokumen Sumber</h3>
+                            <p>Referensi dan dokumen pendukung</p>
+                        </div>
+                    </a>
+
+                    <a href="https://drive.google.com/drive/folders/1UargBHlX8ai58wK1v3gWFxcZuXSnKOfp?usp=drive_link" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">🔄</div>
+                        <div class="doc-content">
+                            <h3>Tindak Lanjut TW III</h3>
+                            <p>Follow-up hasil Triwulan III</p>
+                        </div>
+                    </a>
+
+                    <a href="https://drive.google.com/drive/folders/1mmIi-m3y_DnCK9oMi8C-P3mSIGyfh5cw?usp=drive_link" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">📊</div>
+                        <div class="doc-content">
+                            <h3>Kertas Kerja Capaian Kinerja</h3>
+                            <p>Analisis detail pencapaian kinerja</p>
+                        </div>
+                    </a>
+
+                    <a href="https://drive.google.com/drive/folders/1nRmrlpc36D72z0y0DygDAjDJFd9thAmW?usp=drive_link" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">📋</div>
+                        <div class="doc-content">
+                            <h3>Kertas Kerja Notula</h3>
+                            <p>Detail dokumentasi rapat lengkap</p>
+                        </div>
+                    </a>
+
+                    <a href="https://drive.google.com/drive/folders/1YEAnhCoUUJ-0Ln-GBz49NmtpfwaEW9Cv?usp=drive_link" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">📁</div>
+                        <div class="doc-content">
+                            <h3>Dokumen Lainnya</h3>
+                            <p>File pendukung dan lampiran tambahan</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PK 2025 -->
+            <div id="page-pk-2025" class="content-page">
+                <div class="page-header">
+                    <div class="page-banner">
+                        <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1200&q=80" alt="PK">
+                    </div>
+                    <h1 class="page-title">Perjanjian <span class="highlight">Kinerja 2025</span></h1>
+                    <p class="page-description">Dokumen komitmen pencapaian kinerja tahunan yang menjadi acuan pelaksanaan program kerja tahun 2025</p>
+                </div>
+
+                <h2 class="section-title">📅 Tahun 2025</h2>
+
+                <div class="doc-grid">
+                    <a href="https://drive.google.com/drive/folders/1KderGaEdW-MDda2uPgYWNo65W6aWuRRH" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">📁</div>
+                        <div class="doc-content">
+                            <h3>Dokumen Perjanjian Kinerja 2025</h3>
+                            <p>Folder lengkap dokumen PK tahun 2025</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PK 2026 -->
+            <div id="page-pk-2026" class="content-page">
+                <div class="page-header">
+                    <div class="page-banner">
+                        <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1200&q=80" alt="PK">
+                    </div>
+                    <h1 class="page-title">Perjanjian <span class="highlight">Kinerja 2026</span></h1>
+                    <p class="page-description">Dokumen komitmen pencapaian kinerja tahunan yang menjadi acuan pelaksanaan program kerja tahun 2026</p>
+                </div>
+
+                <h2 class="section-title">📅 Tahun 2026</h2>
+
+                <div class="doc-grid">
+                    <a href="https://drive.google.com/drive/folders/1DcvVZ1nciuFKr3aW0rDYHvUEw1sWVOwF?usp=drive_link" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">📧</div>
+                        <div class="doc-content">
+                            <h3>Undangan</h3>
+                            <p>Surat undangan rapat PK 2026</p>
+                        </div>
+                    </a>
+
+                    <a href="https://drive.google.com/drive/folders/1DcvVZ1nciuFKr3aW0rDYHvUEw1sWVOwF?usp=drive_link" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">✅</div>
+                        <div class="doc-content">
+                            <h3>Daftar Hadir</h3>
+                            <p>Absensi peserta rapat PK 2026</p>
+                        </div>
+                    </a>
+
+                    <a href="https://drive.google.com/drive/folders/1OnHcJLor1MIOBrPLtgoXY8sXUnivvH9p?usp=drive_link" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">📝</div>
+                        <div class="doc-content">
+                            <h3>Notula</h3>
+                            <p>Catatan hasil rapat dan kesepakatan</p>
+                        </div>
+                    </a>
+
+                    <a href="https://drive.google.com/drive/folders/1xRlbdIbb2xHYm5AgwoKR78htrFKDJGsd?usp=drive_link" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">📄</div>
+                        <div class="doc-content">
+                            <h3>Draft Notula</h3>
+                            <p>Draft catatan rapat untuk review</p>
+                        </div>
+                    </a>
+
+                    <a href="https://drive.google.com/drive/folders/1RmGG_byPVAkpJmhxdmu9h2A_VyZaxZWP?usp=drive_link" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">🧮</div>
+                        <div class="doc-content">
+                            <h3>Dasar Hitung</h3>
+                            <p>Kalkulasi dan metodologi target kinerja</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- RENSTRA -->
+            <!-- RENSTRA DRAFT -->
+            <div id="page-renstra-draft" class="content-page">
+                <div class="page-header">
+                    <div class="page-banner">
+                        <img src="https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=1200&q=80" alt="Renstra">
+                    </div>
+                    <h1 class="page-title">Draft Ranawal <span class="highlight">Renstra</span></h1>
+                    <p class="page-description">Draft Rancangan Awal Rencana Strategis BPS Kabupaten Sumbawa</p>
+                </div>
+
+                <h2 class="section-title">📅 Draft Ranawal Renstra</h2>
+
+                <div class="doc-grid">
+                    <a href="https://drive.google.com/drive/folders/1cqxoyGH0wB8yYZ0zICf_YLhagTZlnGZV?usp=drive_link" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">📄</div>
+                        <div class="doc-content">
+                            <h3>Draft Ranawal Renstra</h3>
+                            <p>Dokumen draft rancangan awal Renstra</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- RENSTRA REVIU -->
+            <div id="page-renstra-reviu" class="content-page">
+                <div class="page-header">
+                    <div class="page-banner">
+                        <img src="https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=1200&q=80" alt="Renstra">
+                    </div>
+                    <h1 class="page-title">Reviu <span class="highlight">Renstra 2026</span></h1>
+                    <p class="page-description">Dokumentasi proses review Rencana Strategis BPS Kabupaten Sumbawa tahun 2026</p>
+                </div>
+
+                <h2 class="section-title">📅 Reviu Renstra 2026</h2>
+
+                <div class="doc-grid">
+                    <a href="https://drive.google.com/drive/folders/1ZCsuDCaP2wN1dhXUeiBu_ZdxY6ZCk5dp?usp=drive_link" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">📧</div>
+                        <div class="doc-content">
+                            <h3>Undangan</h3>
+                            <p>Surat undangan rapat Reviu Renstra</p>
+                        </div>
+                    </a>
+
+                    <a href="https://drive.google.com/drive/folders/1N415Q3WSeAaw2SMVswZo6oUMMgllmBwZ?usp=drive_link" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">✅</div>
+                        <div class="doc-content">
+                            <h3>Daftar Hadir</h3>
+                            <p>Absensi peserta rapat Reviu Renstra</p>
+                        </div>
+                    </a>
+
+                    <a href="https://drive.google.com/drive/folders/1H2su_QwusHmFvaMnqnG30QA9-Fn47n59?usp=drive_link" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">🧮</div>
+                        <div class="doc-content">
+                            <h3>Dasar Hitung</h3>
+                            <p>Kalkulasi dan metodologi Renstra</p>
+                        </div>
+                    </a>
+
+                    <a href="https://drive.google.com/drive/folders/11qfBVd7AU8its-qFDK6oaEOn2Lmp21Dg?usp=drive_link" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">📝</div>
+                        <div class="doc-content">
+                            <h3>Notula</h3>
+                            <p>Catatan hasil rapat dan kesepakatan</p>
+                        </div>
+                    </a>
+
+                    <a href="https://drive.google.com/drive/folders/113Nr9bczdcGzLls8gbLX9ijpdBa2uOZt?usp=drive_link" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">📄</div>
+                        <div class="doc-content">
+                            <h3>Template Notula</h3>
+                            <p>Format standar notula Renstra</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- LAKIN 2024 -->
+            <div id="page-lakin-2024" class="content-page">
+                <div class="page-header">
+                    <div class="page-banner">
+                        <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=1200&q=80" alt="LAKIN">
+                    </div>
+                    <h1 class="page-title">LAKIN <span class="highlight">2024</span></h1>
+                    <p class="page-description">Laporan Akuntabilitas Kinerja Instansi Pemerintah BPS Kabupaten Sumbawa Tahun 2024</p>
+                </div>
+
+                <h2 class="section-title">📅 LAKIN 2024</h2>
+
+                <div class="doc-grid">
+                    <a href="https://drive.google.com/drive/folders/1m7YEMwf4iOzLe-haHfIVy5J4ElzFrOuF?usp=drive_link" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">📁</div>
+                        <div class="doc-content">
+                            <h3>Dokumen LAKIN 2024</h3>
+                            <p>Folder lengkap LAKIN tahun 2024</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- LAKIN 2025 -->
+            <div id="page-lakin-2025" class="content-page">
+                <div class="page-header">
+                    <div class="page-banner">
+                        <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=1200&q=80" alt="LAKIN">
+                    </div>
+                    <h1 class="page-title">LAKIN <span class="highlight">2025</span></h1>
+                    <p class="page-description">Laporan Akuntabilitas Kinerja Instansi Pemerintah BPS Kabupaten Sumbawa Tahun 2025</p>
+                </div>
+
+                <h2 class="section-title">📅 LAKIN 2025</h2>
+
+                <div class="doc-grid">
+                    <a href="https://drive.google.com/drive/folders/1PdwaEqM5ywLegyX8f99cpVGzb1QrQOdA?usp=drive_link" target="_blank" class="doc-card">
+                        <div class="doc-icon-wrapper">📁</div>
+                        <div class="doc-content">
+                            <h3>Dokumen LAKIN 2025</h3>
+                            <p>Folder lengkap LAKIN tahun 2025</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Toggle submenu level 1 (Tahun)
+        function toggleSubmenu(element) {
+            const menuItem = element.parentElement;
+            const wasOpen = menuItem.classList.contains('open');
+            
+            // Close all menus
+            document.querySelectorAll('.menu-item').forEach(item => {
+                item.classList.remove('open');
+            });
+            
+            // Remove active from all main menu links
+            document.querySelectorAll('.menu-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Open current menu if it wasn't open
+            if (!wasOpen) {
+                menuItem.classList.add('open');
+                element.classList.add('active');
+            }
+        }
+
+        // Toggle submenu level 2 (Triwulan)
+        function toggleSubSubmenu(element, event) {
+            if (event) {
+                event.stopPropagation();
+            }
+            
+            const wasOpen = element.classList.contains('open');
+            
+            // Close all sub-submenus in this submenu
+            const parentSubmenu = element.closest('.submenu');
+            if (parentSubmenu) {
+                parentSubmenu.querySelectorAll('.submenu-item.has-sub').forEach(item => {
+                    if (item !== element) {
+                        item.classList.remove('open');
+                    }
+                });
+            }
+            
+            // Toggle current sub-submenu
+            if (wasOpen) {
+                element.classList.remove('open');
+            } else {
+                element.classList.add('open');
+            }
+        }
+
+        // Show page
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.content-page').forEach(page => {
+                page.classList.remove('active');
+            });
+
+            // Show selected page
+            document.getElementById(`page-${pageId}`).classList.add('active');
+
+            // Update active sub-submenu item
+            document.querySelectorAll('.sub-submenu-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Update active submenu item (for single level)
+            document.querySelectorAll('.submenu-item:not(.has-sub)').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            if (event && event.currentTarget) {
+                event.currentTarget.classList.add('active');
+            }
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Show home
+        function showHome() {
+            // Hide all pages
+            document.querySelectorAll('.content-page').forEach(page => {
+                page.classList.remove('active');
+            });
+
+            // Show home page
+            document.getElementById('page-home').classList.add('active');
+
+            // Close all submenus
+            document.querySelectorAll('.menu-item').forEach(item => {
+                item.classList.remove('open');
+            });
+            
+            document.querySelectorAll('.submenu-item').forEach(item => {
+                item.classList.remove('open');
+            });
+
+            // Remove active from all menu links
+            document.querySelectorAll('.menu-link').forEach(link => {
+                link.classList.remove('active');
+            });
+
+            // Set home as active
+            document.querySelector('.menu-item:first-child .menu-link').classList.add('active');
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
